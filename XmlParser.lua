@@ -21,12 +21,12 @@
 --for that decimal value in the format &#code
 --@param code the decimal value to convert to its respective character
 local function decimalToHtmlChar(code)
-    local n = tonumber(code)
-    if n >= 0 and n < 256 then
-        return string.char(n)
-    else
-        return "&#"..code..";"
+    local num = tonumber(code)
+    if num >= 0 and num < 256 then
+        return string.char(num)
     end
+
+    return "&#"..code..";"
 end
 
 ---Converts the hexadecimal code of a character to its corresponding char
@@ -34,12 +34,12 @@ end
 --for that hexadecimal value in the format &#xCode
 --@param code the hexadecimal value to convert to its respective character
 local function hexadecimalToHtmlChar(code)
-    local n = tonumber(code, 16)
-    if n >= 0 and n < 256 then
-        return string.char(n)
-    else
-        return "&#x"..code..";"
+    local num = tonumber(code, 16)
+    if num >= 0 and num < 256 then
+        return string.char(num)
     end
+
+    return "&#x"..code..";"
 end
 
 local XmlParser = {
@@ -128,9 +128,9 @@ local function fexists(table, elementName)
     end
 end
 
-local function err(self, err, pos)
+local function err(self, errMsg, pos)
     if self.options.errorHandler then
-        self.options.errorHandler(err,pos)
+        self.options.errorHandler(errMsg,pos)
     end
 end
 
@@ -248,7 +248,7 @@ local function _parseDtd(self, xml, pos)
     -- match,endMatch,root,type,name,uri,internal
     local dtdPatterns = {self._DTD1, self._DTD2, self._DTD3, self._DTD4, self._DTD5}
 
-    for i, dtd in pairs(dtdPatterns) do
+    for _, dtd in pairs(dtdPatterns) do
         local m,e,r,t,n,u,i = string.find(xml, dtd, pos)
         if m then
             return m, e, {_root=r, _type=t, _name=n, _uri=u, _internal=i} 
@@ -259,7 +259,7 @@ local function _parseDtd(self, xml, pos)
 end
 
 local function parseDtd(self, xml, f)
-    f.match, f.endMatch, attrs = _parseDtd(self, xml, f.pos)
+    f.match, f.endMatch, _ = _parseDtd(self, xml, f.pos)
     if not f.match then 
         err(self, self._errstr.dtdErr, f.pos)
     end 
@@ -323,13 +323,10 @@ local function parseNormalTag(self, xml, f)
         end
     else
         table.insert(self._stack, tag.name)
+
         if fexists(self.handler, 'starttag') then
             self.handler:starttag(tag, f.match, f.endMatch)
         end
-        --TODO: Tags com fechamento automático estão sendo
-        --retornadas como uma tabela, o que complica
-        --para a app NCLua tratar isso. É preciso
-        --fazer com que seja retornado um campo string vazio.
 
         -- Self-Closing Tag
         if (f.endt2=="/") then

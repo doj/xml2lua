@@ -2,7 +2,9 @@
 :numbered:
 :unsafe:
 
-= xml2lua image:https://travis-ci.org/manoelcampos/xml2lua.svg?branch=master[Build Status,link=https://travis-ci.org/manoelcampos/xml2lua] image:http://img.shields.io/badge/license-MIT-brightgreen.svg[MIT license,link=http://opensource.org/licenses/MIT]
+= xml2lua image:https://travis-ci.com/manoelcampos/xml2lua.svg?branch=master[Build Status,link=https://travis-ci.com/manoelcampos/xml2lua] image:http://img.shields.io/badge/license-MIT-brightgreen.svg[MIT license,link=http://opensource.org/licenses/MIT] image:https://img.shields.io/luarocks/v/manoelcampos/xml2lua[LuaRocks,link=https://luarocks.org/modules/manoelcampos/xml2lua]
+
+pass:[<a href="https://buymeacoff.ee/manoelcampos" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>]
 
 ifdef::env-github[]
 :outfilesuffix: .adoc
@@ -45,7 +47,7 @@ Download the source files using the download button above or type at a terminal:
 
 [source,bash]
 ----
-git clone git@github.com:manoelcampos/xml2lua.git
+git clone https://github.com/manoelcampos/xml2lua.git
 ----
 
 Finally, enter the directory where the source files were downloaded and type:
@@ -116,6 +118,20 @@ print(xml2lua.toXml(people, "people"))
 
 You can use a command line tool to try parsing XML files.
 Execute `lua testxml.lua -help` on the terminal for more details.
+
+== Running tests
+
+=== Requeriments
+
+You must have https://docs.docker.com/compose/install/[installed docker and docker compose].
+
+=== How to
+
+[source,bash]
+----
+make lint # to run the lint check
+make test # to run the acceptance tests
+----
 
 == License
 

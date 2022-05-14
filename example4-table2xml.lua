@@ -4,6 +4,7 @@
 --@author Manoel Campos da Silva Filho - http://manoelcampos.com
 
 local xml2lua = require("xml2lua")
+print("xml2lua v" .. xml2lua._VERSION.."\n")
 
 local people = {
     person = {
@@ -18,4 +19,4 @@ xml2lua.printable(people)
 print("\n------------------------------------------------------\n")
 
 print("XML Representation\n")
-print(xml2lua.toXml(people, "people"))
+print(xml2lua.toXml(people))
